@@ -1,0 +1,60 @@
+<div class="container">
+	<div class="mb-3">
+		<h1 class="font-weight-bold m-0"><%= title %></h1>
+		<% if(typeof genre != 'undefined' || typeof query != 'undefined') { %>
+		<p class="lead">
+			<% if(typeof query != 'undefined') { %>
+			<span>Query</span>
+			<u><%= query %></u>
+			<% } if(typeof genre != 'undefined') { %>
+			<span>Genre</span>
+			<u><%= genre %></u>
+			<% } %>
+		</p>
+		<% } %>
+	</div>
+	<% if(movies.length) { %>
+	<div class="row">
+		<% for (let movie of movies) { %>
+		<div class="col-md-4">
+			<div class="card">
+				<img
+					src="<%= movie.poster.includes('http') ? movie.poster : '/uploads/' + movie.poster %>"
+					class="card-img-top movie-img"
+					alt="<%= movie.title %>"
+				/>
+				<div class="card-body">
+					<h5 class="card-title"><%= movie.title %></h5>
+					<p class="card-text"><%= movie.plot %></p>
+					<div class="mb-3">
+						<% for (let g of movie.genre) { %>
+						<span class="badge badge-secondary"><%= g %></span>
+						<% } %>
+					</div>
+					<a href="/movies/<%= movie._id %>" class="btn btn-primary"
+						>Read more</a
+					>
+				</div>
+			</div>
+		</div>
+		<% } %>
+	</div>
+	<div class="my-3">
+		<nav>
+			<ul class="pagination">
+				<% if(prevLink) { %>
+				<li class="page-item">
+					<a class="page-link" href="<%= prevLink %>">Previous</a>
+				</li>
+				<% } %> <% if(nextLink) { %>
+				<li class="page-item">
+					<a class="page-link" href="<%= nextLink %>">Next</a>
+				</li>
+				<% } %>
+			</ul>
+		</nav>
+	</div>
+	<% } else { %>
+	<p class="text-center">No data available.</p>
+	<% } %>
+</div>
